@@ -124,7 +124,7 @@ namespace MovieDatabase.Models
         // true if index update was possible, false otherwise<
         public bool Next()
         {
-            if (db.Count() > 0 && _index != (db.Count - 1))
+            if (db.Count() > 0 && _index != (db.Count() - 1))
             {
                 _index++;
                 return true;
@@ -166,6 +166,8 @@ namespace MovieDatabase.Models
                 string json = File.ReadAllText(file);
                 db = JsonConvert.DeserializeObject<List<Movie>>(json);
             }
+
+            _index = db.Count() - 1;
         }
 
         // Save movies to a Json file

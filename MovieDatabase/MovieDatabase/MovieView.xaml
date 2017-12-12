@@ -43,19 +43,21 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BFirst" Content="First" Grid.Column="0" Click="BFirst_Click"/>
-                <Button x:Name="BPrevious" Content="Previous" Grid.Column="1" Click="BPrevious_Click"/>
-                <Button x:Name="BNext" Content="Next" Grid.Column="2" Click="BNext_Click"/>
-                <Button x:Name="BLast" Content="Last" Grid.Column="3" Click="BLast_Click"/>
+                <Button x:Name="BFirst" Content="First" Grid.Column="0" Click="BFirst_Click" Padding="3" Margin="5"/>
+                <Button x:Name="BPrevious" Content="Previous" Grid.Column="1" Click="BPrevious_Click" Padding="3" Margin="5"/>
+                <Button x:Name="BNext" Content="Next" Grid.Column="2" Click="BNext_Click" Padding="3" Margin="5"/>
+                <Button x:Name="BLast" Content="Last" Grid.Column="3" Click="BLast_Click" Padding="3" Margin="5"/>
+                <Button x:Name="BCancel" Content="Cancel" Grid.Column="3" Click="BCancel_Click" Padding="3" Margin="5" Visibility="Hidden"/>
+                <Button x:Name="BSave" Content="Save" Grid.Column="2" Click="BSave_Click" Padding="3" Margin="5" Visibility="Hidden"/>
 
             </Grid>
 
             <StackPanel>
                 <!-- Title -->
                 <Label Content="Title" FontSize="11" FontWeight="Bold"/>
-                <TextBox x:Name="title" Text="Type Here..."/>
+                <TextBox x:Name="TitleTxt" Text="Type Here..." Padding="3" Margin="5"/>
 
-                <!-- Duration and Year -->
+                <!-- Duration, Budget, Year and Rating User Control -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -64,40 +66,54 @@
 
                     <StackPanel Grid.Column="0">
                         <Label Content="Duration" FontSize="11" FontWeight="Bold"/>
-                        <TextBox x:Name="duration" Text="Type Here..."/>
+                        <TextBox x:Name="DurationTxt" Text="Type Here..." Padding="3" Margin="5"/>
+
+                        <Label Content="Budget" FontSize="11" FontWeight="Bold"/>
+                        <TextBox x:Name="BudgetTxt" Text="Type Here..." Padding="3" Margin="5"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
                         <Label Content="Year" FontSize="11" FontWeight="Bold"/>
-                        <TextBox x:Name="year" Text="Type Here..."/>
+                        <TextBox x:Name="YearTxt" Text="Type Here..." Padding="3" Margin="5"/>
+
+                        <local:RatingSelector x:Name="Rating" Grid.Column="1" Padding="3"/>
                     </StackPanel>
-                </Grid>
-
-                <!-- Budget and Rating User Control -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0">
-                        <Label Content="Budget" FontSize="11" FontWeight="Bold"/>
-                        <TextBox x:Name="budget" Text="Type Here..."/>
-                    </StackPanel>
-
-                    <local:RatingSelector x:Name="Rating" Grid.Column="1"/>
                 </Grid>
 
                 <!-- Director -->
                 <Label Content="Director" FontSize="11" FontWeight="Bold"/>
-                <TextBox x:Name="director" Text="Type Here..."/>
+                <TextBox x:Name="DirectorTxt" Text="Type Here..." Padding="3" Margin="5"/>
 
                 <!-- Genre User Control -->
-                <local:GenreSelector x:Name="Genre" Grid.Column="1"/>
+                <local:GenreSelector x:Name="Genre" Grid.Column="1" Padding="3"/>
 
                 <!-- Cast List Box -->
-                <Label Content="Cast" FontSize="11" FontWeight="Bold"/>
-                <ListBox x:Name="CastListBox"/>
+                <Label Content="Cast" FontSize="11" FontWeight="Bold" Padding="3" Margin="5"/>
+
+                <Grid x:Name ="CastGrid" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="CastTxt" Text="" Padding="3" Margin="5" Grid.Column="0"/>
+                    <Button x:Name="BAdd" Content="Add" Grid.Column="1" Click="BAdd_Click" Padding="3" Margin="5"/>
+                    <Button x:Name="BDelete" Content="Delete" Grid.Column ="2"  Click="BDelete_Click" Padding="3" Margin="5"/>
+                </Grid>
+
+                <ListBox x:Name="CastList" Padding="3" Margin="5" />
+
+                <!-- Poster Image -->
+                <Label x:Name="Movielbl" Content="MoviePosterURl" FontSize="11" FontWeight="Bold" Padding="3" Margin="5" Grid.Column="0"/>
+                <TextBox x:Name="MovieURLTxt" Grid.Column="0" Padding="3" Margin="5" Grid.ColumnSpan="2" />
+
+                <StackPanel>
+                    <Label x:Name="PosterLbl" Content="Poster" FontSize="11" FontWeight="Bold" Visibility="Visible"/>
+
+                    <Image x:Name="Image" Height="200" Width="200" />
+
+                </StackPanel>
 
             </StackPanel>
             
