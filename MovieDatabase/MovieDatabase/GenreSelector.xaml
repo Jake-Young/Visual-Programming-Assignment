@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="580">
     <GroupBox Header="Genre">
-        <WrapPanel HorizontalAlignment="Right">
+        <WrapPanel HorizontalAlignment="Center" Background="AliceBlue">
             <CheckBox x:Name="CbComedy" Content="Comedy" Margin="2"/>
             <CheckBox x:Name="CbRomance" Content="Romance" Margin="2"/>
             <CheckBox x:Name="CbAction" Content="Action" Margin="2"/>

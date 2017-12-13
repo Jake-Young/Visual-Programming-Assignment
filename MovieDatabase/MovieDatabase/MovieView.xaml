@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MovieDatabase"
         mc:Ignorable="d"
-       Title="Movie Database" Height="550"  Width="580" SizeToContent="WidthAndHeight">
+       Title="Movie Database" Height="550"  Width="900" SizeToContent="WidthAndHeight">
 
     <Border Margin="5">
 
@@ -13,6 +13,7 @@
         <DockPanel>
             <!-- 1. Menu -->
             <Menu DockPanel.Dock="Top">
+                <!-- Menu - File -->
                 <MenuItem Header="File" x:Name="FileMenu">
                     <MenuItem Header="New" x:Name="FileNewMenu" Click="FileNewMenu_Click"/>
                     <MenuItem Header="Open" x:Name="FileOpenMenu" Click="FileOpenMenu_Click"/>
@@ -20,17 +21,23 @@
                     <Separator/>
                     <MenuItem Header="Exit" x:Name="FileExitMenu" Click="FileExitMenu_Click"/>
                 </MenuItem>
+
+                <!-- Menu - Edit -->
                 <MenuItem Header="Edit" x:Name="EditMenu">
                     <MenuItem Header="Create" x:Name="EditCreateMenu" Click="EditCreateMenu_Click"/>
                     <Separator/>
                     <MenuItem Header="Edit" x:Name="EditEditMenu" Click="EditEditMenu_Click"/>
                     <MenuItem Header="Delete" x:Name="EditDeleteMenu" Click="EditDeleteMenu_Click"/>
                 </MenuItem>
+
+                <!--Menu - View -->
                 <MenuItem Header="View" x:Name="ViewMenu">
                     <MenuItem Header="By Title" x:Name="ViewByTitleMenu" Click="ViewByTitleMenu_Click"/>
                     <MenuItem Header="By Year" x:Name="ViewByYearMenu" Click="ViewByYearMenu_Click"/>
                     <MenuItem Header="By Duration" x:Name="ViewByDuration" Click="ViewByDuration_Click"/>
                 </MenuItem>
+
+                <!--Menu - Help-->
                 <MenuItem Header="Help" x:Name="HelpMenu" Click="HelpMenu_Click"/>
             </Menu>
 
@@ -48,7 +55,7 @@
                 <Button x:Name="BNext" Content="Next" Grid.Column="2" Click="BNext_Click" Padding="3" Margin="5"/>
                 <Button x:Name="BLast" Content="Last" Grid.Column="3" Click="BLast_Click" Padding="3" Margin="5"/>
                 <Button x:Name="BCancel" Content="Cancel" Grid.Column="3" Click="BCancel_Click" Padding="3" Margin="5" Visibility="Hidden"/>
-                <Button x:Name="BSave" Content="Save" Grid.Column="2" Click="BSave_Click" Padding="3" Margin="5" Visibility="Hidden"/>
+                <Button x:Name="BSave" Content="Save" Grid.Column="2" Click="BSave_Click" Padding="3" Margin="5" BorderThickness="2" BorderBrush="CadetBlue" Visibility="Hidden"/>
 
             </Grid>
 
@@ -60,8 +67,8 @@
                 <!-- Duration, Budget, Year and Rating User Control -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
@@ -102,25 +109,18 @@
                     <Button x:Name="BDelete" Content="Delete" Grid.Column ="2"  Click="BDelete_Click" Padding="3" Margin="5"/>
                 </Grid>
 
-                <ListBox x:Name="CastList" Padding="3" Margin="5" />
+                <ListBox x:Name="CastList" Padding="5" Margin="5" />
 
                 <!-- Poster Image -->
                 <Label x:Name="Movielbl" Content="MoviePosterURl" FontSize="11" FontWeight="Bold" Padding="3" Margin="5" Grid.Column="0"/>
                 <TextBox x:Name="MovieURLTxt" Grid.Column="0" Padding="3" Margin="5" Grid.ColumnSpan="2" />
 
-                <StackPanel>
-                    <Label x:Name="PosterLbl" Content="Poster" FontSize="11" FontWeight="Bold" Visibility="Visible"/>
-
-                    <Image x:Name="Image" Height="200" Width="200" />
-
-                </StackPanel>
-
             </StackPanel>
-            
-
+            <StackPanel>
+                <Label x:Name="PosterLbl" Content="Poster" FontSize="11" FontWeight="Bold" Visibility="Collapsed"/>
+                <Image x:Name="Image" Height="200" Width="200" Stretch="Uniform" Visibility="Collapsed"/>
+            </StackPanel>
         </DockPanel>
-        
     </Border>
-
 </Window>
 

@@ -68,17 +68,22 @@ namespace MovieDatabase
                 CastList.Items.Add(s);
             }
 
-            try
+            if (MovieURLTxt.Text != "")
             {
-                var path = M.URL;
-                var uri = new Uri(path, UriKind.Absolute);  // create a uri
-                Image.Source = new BitmapImage(uri);
+                try
+                {
+                    var path = M.URL;
+                    var uri = new Uri(path, UriKind.Absolute);  // create a uri
+                    Image.Source = new BitmapImage(uri);
+                    PosterLbl.Visibility = Visibility.Visible;
+                    Image.Visibility = Visibility.Visible;
 
-            }
-            catch (UriFormatException e)
-            {
-                Image.Source = null;
-                MessageBox.Show("Invalid URL", "Error");     // invalid path
+                }
+                catch (UriFormatException e)
+                {
+                    Image.Source = null;
+                    MessageBox.Show("Invalid URL", "Error");     // invalid path
+                }
             }
 
             UpdateNavigation();
@@ -88,7 +93,18 @@ namespace MovieDatabase
         {
             NM = new Movie();
             NDB = new Database();
+            
+            NDB.Add(NM);
+
+            UpdateUIFromModel(NM);
             SetUIMode(WindowMode.View);
+
+            if (NDB.Index() == -1) {
+                BFirst.IsEnabled = false;
+                BPrevious.IsEnabled = false;
+                BLast.IsEnabled = false;
+                BNext.IsEnabled = false;
+            }
         }
 
         private void FileOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -98,6 +114,7 @@ namespace MovieDatabase
 
             NDB.First();
             UpdateUIFromModel(NDB.Get());
+            SetUIMode(WindowMode.View);
         }
 
         private void FileSaveMenu_Click(object sender, RoutedEventArgs e)
@@ -196,12 +213,17 @@ namespace MovieDatabase
                 NM.Actors.Add(CastTxt.Text);
                 CastList.Items.Add(CastTxt.Text);
             }
+
+            CastTxt.Text = "";
         }
 
-            private void BDelete_Click(object sender, RoutedEventArgs e)
+        private void BDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CastList.SelectedItem != null)
+            {
+                NM.Actors.Remove(CastList.SelectedItem.ToString());
                 CastList.Items.Remove(CastList.SelectedItem);
+            }
         }
 
         private void BSave_Click(object sender, RoutedEventArgs e)
@@ -212,23 +234,22 @@ namespace MovieDatabase
                 m = UpdateMovieFromUI(m);
                 NDB.Add(m);
             }
-            else
+            else if (this.Mode == WindowMode.Edit)
             {
                 Movie m = NDB.Get();
                 m = UpdateMovieFromUI(m);
-                NDB.Update(m);
+                NDB.Update(m);               
             }
 
             SetUIMode(WindowMode.View);
+            UpdateUIFromModel(NDB.Get());
 
-            UpdateUIFromModel(NDB.Get());  
-        
         }
 
         private void BCancel_Click(object sender, RoutedEventArgs e)
         {
             SetUIMode(WindowMode.View);
-            UpdateUIFromModel(NM);
+            UpdateUIFromModel(NDB.Get());
         }
 
         private void SetUIMode(WindowMode mode)
@@ -250,12 +271,15 @@ namespace MovieDatabase
                 BPrevious.IsEnabled = false;
                 BNext.IsEnabled = false;
                 BFirst.IsEnabled = false;
+                BPrevious.Visibility = Visibility.Hidden;
+                BFirst.Visibility = Visibility.Hidden;
                 BSave.Visibility = Visibility.Visible;
                 BCancel.Visibility = Visibility.Visible;
                 CastGrid.Visibility = Visibility.Visible;
                 MovieURLTxt.Visibility = Visibility.Visible;
                 Movielbl.Visibility = Visibility.Visible;
                 PosterLbl.Visibility = Visibility.Collapsed;
+                Image.Visibility = Visibility.Collapsed;
             }
             else if (mode == WindowMode.View)
             {
@@ -272,6 +296,8 @@ namespace MovieDatabase
                 BPrevious.IsEnabled = true;
                 BNext.IsEnabled = true;
                 BFirst.IsEnabled = true;
+                BPrevious.Visibility = Visibility.Visible;
+                BFirst.Visibility = Visibility.Visible;
                 BSave.Visibility = Visibility.Hidden;
                 BCancel.Visibility = Visibility.Hidden;
                 CastGrid.Visibility = Visibility.Collapsed;
@@ -315,6 +341,7 @@ namespace MovieDatabase
             DirectorTxt.Text = "";
             Genre.Clear();
             CastTxt.Text = "";
+            CastList.Items.Clear();
             MovieURLTxt.Text = "";
         }
 

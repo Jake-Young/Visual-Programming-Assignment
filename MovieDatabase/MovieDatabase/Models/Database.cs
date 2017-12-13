@@ -81,6 +81,7 @@ namespace MovieDatabase.Models
         public void Update(Movie m)
         {
             db.Insert(_index, m);
+            db.RemoveAt(_index + 1);
         }
 
         // Delete all movies from the database and reset index

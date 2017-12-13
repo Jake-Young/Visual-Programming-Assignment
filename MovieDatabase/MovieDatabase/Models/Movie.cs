@@ -131,7 +131,7 @@ namespace MovieDatabase.Models
         }
 
         public void Reset()
-        {
+        { 
             Title = "";
             Year = 0;
             Director = "";
