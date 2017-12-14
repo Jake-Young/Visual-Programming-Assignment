@@ -8,7 +8,6 @@
        Title="Movie Database" Height="550"  Width="900" SizeToContent="WidthAndHeight">
 
     <Border Margin="5">
-
         <!-- add layout design here -->
         <DockPanel>
             <!-- 1. Menu -->
@@ -118,7 +117,7 @@
             </StackPanel>
             <StackPanel>
                 <Label x:Name="PosterLbl" Content="Poster" FontSize="11" FontWeight="Bold" Visibility="Collapsed"/>
-                <Image x:Name="Image" Height="200" Width="200" Stretch="Uniform" Visibility="Collapsed"/>
+                <Image x:Name="Image" Height="400" Width="400" Stretch="Uniform"  Visibility="Collapsed"/>
             </StackPanel>
         </DockPanel>
     </Border>

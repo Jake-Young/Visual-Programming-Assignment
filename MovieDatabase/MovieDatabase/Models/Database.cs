@@ -85,10 +85,10 @@ namespace MovieDatabase.Models
         }
 
         // Delete all movies from the database and reset index
-        public void clear()
+        public void Clear()
         {
             db.Clear();
-            _index = 0;
+            _index = -1;
         }
 
         // Move index position to first movie (0)

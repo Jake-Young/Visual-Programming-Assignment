@@ -210,7 +210,6 @@ namespace MovieDatabase
         {
             if (CastTxt.Text != "")
             {
-                NM.Actors.Add(CastTxt.Text);
                 CastList.Items.Add(CastTxt.Text);
             }
 

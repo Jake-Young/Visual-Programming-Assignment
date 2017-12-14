@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MovieDatabase.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MovieDatabaseTestProject
 {
@@ -12,12 +14,15 @@ namespace MovieDatabaseTestProject
         private Movie m3;
         private Database db;
 
+
+        /// <summary>
+        /// This method is executed BEFORE EACH test method
+        /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            // create test database and populate with sample movies
             db = new Database();
-            m1 = new Movie() { Title = "Movie 1", Year = 2017, Duration = 150 };
+            m1 = new Movie() { Title = "Movie 1", Year = 2017, Duration = 120 };
             m2 = new Movie() { Title = "Movie 2", Year = 2013, Duration = 90 };
             m3 = new Movie() { Title = "Movie 3", Year = 2015, Duration = 120 };
 
@@ -27,22 +32,22 @@ namespace MovieDatabaseTestProject
         }
 
         [TestMethod]
-        public void TestStoreAndLoad()
+        public void TestStoreThenLoad()
         {
             int numMoviesBeforeSave = db.Count();
             db.Save("movies.json");
-            db.clear();
+            db.Clear();
             db.Load("movies.json");
             db.First();
             // verify same number of movies loaded
-            Assert.AreEqual(numMoviesBeforeSave, db.Count());
-
+            Assert.AreEqual(numMoviesBeforeSave, db.Count());            
+            
             // verify first movie still found
             Assert.AreEqual(m1.Title, db.Get().Title);
         }
 
         [TestMethod]
-        public void TestAddAndIsCurrent()
+        public void TestAddThenIsCurrent()
         {
             Movie m4 = new Movie { Title = "Movie 4", Year = 2017, Duration = 50 };
             db.Add(m4);
@@ -51,12 +56,27 @@ namespace MovieDatabaseTestProject
 
 
         [TestMethod]
-        public void TestClearThenAdd()
+        public void TestUpdateThenIsCurrent()
         {
-            db.clear();
-            db.Add(m1);
-            Assert.AreEqual(1, db.Count());
-            Assert.AreEqual(m1.Title, db.Get().Title);
+            // get first movie
+            Movie m = db.Get();
+            m.Title = "Updated Title";
+            m.Director = "Updated Director";
+            m.Year = 2000;
+            m.Duration = 100;
+            m.Genres = new List<Genre> { Genre.action, Genre.comedy };
+            m.URL = "url";
+            m.Actors = new List<string> { "A1", "A2" };
+
+            db.Update(m);
+
+            Assert.AreEqual("Updated Title", db.Get().Title);
+            Assert.AreEqual("Updated Director", db.Get().Director);
+            Assert.AreEqual(2000, db.Get().Year);
+            Assert.AreEqual(100, db.Get().Duration);
+            Assert.AreEqual(2, db.Get().Genres.Count);
+            Assert.AreEqual("url", db.Get().URL);
+            Assert.AreEqual(2, db.Get().Actors.Count());
         }
 
         [TestMethod]
@@ -64,13 +84,13 @@ namespace MovieDatabaseTestProject
         {
             db.First();
             db.Delete();
-            Assert.AreEqual(2, db.Count());
+            Assert.AreEqual(2,db.Count());
             Assert.AreEqual(m2.Title, db.Get().Title);
         }
 
         [TestMethod]
         public void TestDeleteAllThenCountAndIndexAreValid()
-        {
+        {      
             db.Delete();
             db.Delete();
             db.Delete();
@@ -90,22 +110,15 @@ namespace MovieDatabaseTestProject
         [TestMethod]
         public void TestClearThenCountIsOneAfterAdd()
         {
-            db.clear();
+            db.Clear();
             db.Add(m1);
-            Assert.AreEqual(1, db.Count());
+            Assert.AreEqual( 1, db.Count() );
         }
 
         [TestMethod]
         public void TestClearThenGetReturnsNull()
         {
-            db.clear();
-            Assert.AreEqual(null, db.Get());
-        }
-
-        [TestMethod]
-        public void TestClear()
-        {
-            db.clear();
+            db.Clear();
             Assert.AreEqual(null, db.Get());
         }
 
@@ -143,14 +156,14 @@ namespace MovieDatabaseTestProject
         public void TestNavigateToNextFailsWhenAtLast()
         {
             db.Last();
-            Assert.AreEqual(false, db.Next());
+            Assert.AreEqual( false, db.Next() );
         }
 
         [TestMethod]
         public void TestNavigateToPrevFailsWhenAtFirst()
         {
             db.First();
-            Assert.AreEqual(false, db.Prev());
+            Assert.AreEqual( false, db.Prev() );
         }
 
         [TestMethod]
